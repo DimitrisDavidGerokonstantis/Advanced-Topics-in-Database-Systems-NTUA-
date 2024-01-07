@@ -33,7 +33,10 @@ for some rows and printing of the schema and total number of rows.
 - `Question 5/Query 3` : Implementation of the third query.
 - `Question 6/Query 4` :  Implementation of the fourth query.
 - `Question 7` : Some of the query plans extracted while executing the joins using the
-hint&explain methods.  
+hint&explain methods.
+- `report.pdf` : Contains our report in pdf format with our analysis of the results, performances and
+explanations of our codes.
+- `Latex Project` : Contains a .zip file of our Latex Project (Latex code and images used).   
 
 ## Cluster Description
 As mentioned before, we used a two-node cluster, consisting of two virtual machines, running Ubuntu 22.04 and    
