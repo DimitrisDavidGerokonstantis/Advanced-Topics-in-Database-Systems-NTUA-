@@ -11,7 +11,7 @@ University of Athens, during the 9th semester.
 
 
 ## Collaborators  
-- [Dimitrios-David Gerokonstantis](link-to-profile)  (el19209)
+- [Dimitrios-David Gerokonstantis](https://github.com/DimitrisDavidGerokonstantis)  (el19209)
 - [Athanasios Tsoukleidis-Karydakis](https://github.com/ThanosTsoukleidis-Karydakis)  (el19009)
 
 ## Datasets  
