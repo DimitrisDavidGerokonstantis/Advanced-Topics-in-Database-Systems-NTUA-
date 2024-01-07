@@ -1,0 +1,104 @@
+PLAN FOR 1st JOIN QUERY 3 BROADCAST
+
+== Physical Plan ==
+AdaptiveSparkPlan isFinalPlan=false
++- BroadcastHashJoin [knownfloatingpointnormalized(normalizenanandzero(LAT#5940)), knownfloatingpointnormalized(normalizenanandzero(LON#5969))], [knownfloatingpointnormalized(normalizenanandzero(cast(LAT#6290 as double))), knownfloatingpointnormalized(normalizenanandzero(cast(LON#6291 as double)))], LeftOuter, BuildRight, false
+   :- Union
+   :  :- Project [DR_NO#5796, cast(gettimestamp(Date Rptd#5797, MM/dd/yyyy hh:mm:ss a, TimestampType, Some(Europe/Athens), false) as date) AS Date Rptd#5852, cast(gettimestamp(DATE OCC#5798, MM/dd/yyyy hh:mm:ss a, TimestampType, Some(Europe/Athens), false) as date) AS DATE OCC#5882, TIME OCC#5799, AREA #5800, AREA NAME#5801, Rpt Dist No#5802, Part 1-2#5803, Crm Cd#5804, Crm Cd Desc#5805, Mocodes#5806, cast(Vict Age#5807 as int) AS Vict Age#5911, Vict Sex#5808, Vict Descent#5809, Premis Cd#5810, Premis Desc#5811, Weapon Used Cd#5812, Weapon Desc#5813, Status#5814, Status Desc#5815, Crm Cd 1#5816, Crm Cd 2#5817, Crm Cd 3#5818, Crm Cd 4#5819, ... 4 more fields]
+   :  :  +- Filter isnotnull(Vict Descent#5809)
+   :  :     +- FileScan csv [DR_NO#5796,Date Rptd#5797,DATE OCC#5798,TIME OCC#5799,AREA #5800,AREA NAME#5801,Rpt Dist No#5802,Part 1-2#5803,Crm Cd#5804,Crm Cd Desc#5805,Mocodes#5806,Vict Age#5807,Vict Sex#5808,Vict Descent#5809,Premis Cd#5810,Premis Desc#5811,Weapon Used Cd#5812,Weapon Desc#5813,Status#5814,Status Desc#5815,Crm Cd 1#5816,Crm Cd 2#5817,Crm Cd 3#5818,Crm Cd 4#5819,... 4 more fields] Batched: false, DataFilters: [isnotnull(Vict Descent#5809)], Format: CSV, Location: InMemoryFileIndex(1 paths)[hdfs://okeanos-master:54310/spark_project_datasets/basic_dataset_2010t..., PartitionFilters: [], PushedFilters: [IsNotNull(Vict Descent)], ReadSchema: struct<DR_NO:string,Date Rptd:string,DATE OCC:string,TIME OCC:string,AREA :string,AREA NAME:strin...
+   :  +- Project [DR_NO#6015, cast(gettimestamp(Date Rptd#6016, MM/dd/yyyy hh:mm:ss a, TimestampType, Some(Europe/Athens), false) as date) AS Date Rptd#6071, cast(gettimestamp(DATE OCC#6017, MM/dd/yyyy hh:mm:ss a, TimestampType, Some(Europe/Athens), false) as date) AS DATE OCC#6101, TIME OCC#6018, AREA#6019, AREA NAME#6020, Rpt Dist No#6021, Part 1-2#6022, Crm Cd#6023, Crm Cd Desc#6024, Mocodes#6025, cast(Vict Age#6026 as int) AS Vict Age#6130, Vict Sex#6027, Vict Descent#6028, Premis Cd#6029, Premis Desc#6030, Weapon Used Cd#6031, Weapon Desc#6032, Status#6033, Status Desc#6034, Crm Cd 1#6035, Crm Cd 2#6036, Crm Cd 3#6037, Crm Cd 4#6038, ... 4 more fields]
+   :     +- Filter isnotnull(Vict Descent#6028)
+   :        +- FileScan csv [DR_NO#6015,Date Rptd#6016,DATE OCC#6017,TIME OCC#6018,AREA#6019,AREA NAME#6020,Rpt Dist No#6021,Part 1-2#6022,Crm Cd#6023,Crm Cd Desc#6024,Mocodes#6025,Vict Age#6026,Vict Sex#6027,Vict Descent#6028,Premis Cd#6029,Premis Desc#6030,Weapon Used Cd#6031,Weapon Desc#6032,Status#6033,Status Desc#6034,Crm Cd 1#6035,Crm Cd 2#6036,Crm Cd 3#6037,Crm Cd 4#6038,... 4 more fields] Batched: false, DataFilters: [isnotnull(Vict Descent#6028)], Format: CSV, Location: InMemoryFileIndex(1 paths)[hdfs://okeanos-master:54310/spark_project_datasets/basic_dataset_2020t..., PartitionFilters: [], PushedFilters: [IsNotNull(Vict Descent)], ReadSchema: struct<DR_NO:string,Date Rptd:string,DATE OCC:string,TIME OCC:string,AREA:string,AREA NAME:string...
+   +- BroadcastExchange HashedRelationBroadcastMode(List(knownfloatingpointnormalized(normalizenanandzero(cast(input[0, string, true] as double))), knownfloatingpointnormalized(normalizenanandzero(cast(input[1, string, true] as double)))),false), [plan_id=6477]
+      +- Project [LAT#6290, LON#6291, ZIPcode#6292, split(ZIPcode#6292, -, -1)[0] AS ZIP_code#6296]
+         +- Filter (((isnotnull(ZIPcode#6292) AND isnotnull(split(ZIPcode#6292, -, -1)[0])) AND isnotnull(LAT#6290)) AND isnotnull(LON#6291))
+            +- FileScan csv [LAT#6290,LON#6291,ZIPcode#6292] Batched: false, DataFilters: [isnotnull(ZIPcode#6292), isnotnull(split(ZIPcode#6292, -, -1)[0]), isnotnull(LAT#6290), isnotnul..., Format: CSV, Location: InMemoryFileIndex(1 paths)[hdfs://okeanos-master:54310/spark_project_datasets/revgecoding_b.csv], PartitionFilters: [], PushedFilters: [IsNotNull(ZIPcode), IsNotNull(LAT), IsNotNull(LON)], ReadSchema: struct<LAT:string,LON:string,ZIPcode:string>
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+PLAN FOR 1st JOIN QUERY 3 SORT MERGE
+
+== Physical Plan ==
+AdaptiveSparkPlan isFinalPlan=false
++- SortMergeJoin [knownfloatingpointnormalized(normalizenanandzero(LAT#9764)), knownfloatingpointnormalized(normalizenanandzero(LON#9793))], [knownfloatingpointnormalized(normalizenanandzero(cast(LAT#10114 as double))), knownfloatingpointnormalized(normalizenanandzero(cast(LON#10115 as double)))], LeftOuter
+   :- Sort [knownfloatingpointnormalized(normalizenanandzero(LAT#9764)) ASC NULLS FIRST, knownfloatingpointnormalized(normalizenanandzero(LON#9793)) ASC NULLS FIRST], false, 0
+   :  +- Exchange hashpartitioning(knownfloatingpointnormalized(normalizenanandzero(LAT#9764)), knownfloatingpointnormalized(normalizenanandzero(LON#9793)), 200), ENSURE_REQUIREMENTS, [plan_id=11561]
+   :     +- Union
+   :        :- Project [DR_NO#9620, cast(gettimestamp(Date Rptd#9621, MM/dd/yyyy hh:mm:ss a, TimestampType, Some(Europe/Athens), false) as date) AS Date Rptd#9676, cast(gettimestamp(DATE OCC#9622, MM/dd/yyyy hh:mm:ss a, TimestampType, Some(Europe/Athens), false) as date) AS DATE OCC#9706, TIME OCC#9623, AREA #9624, AREA NAME#9625, Rpt Dist No#9626, Part 1-2#9627, Crm Cd#9628, Crm Cd Desc#9629, Mocodes#9630, cast(Vict Age#9631 as int) AS Vict Age#9735, Vict Sex#9632, Vict Descent#9633, Premis Cd#9634, Premis Desc#9635, Weapon Used Cd#9636, Weapon Desc#9637, Status#9638, Status Desc#9639, Crm Cd 1#9640, Crm Cd 2#9641, Crm Cd 3#9642, Crm Cd 4#9643, ... 4 more fields]
+   :        :  +- Filter isnotnull(Vict Descent#9633)
+   :        :     +- FileScan csv [DR_NO#9620,Date Rptd#9621,DATE OCC#9622,TIME OCC#9623,AREA #9624,AREA NAME#9625,Rpt Dist No#9626,Part 1-2#9627,Crm Cd#9628,Crm Cd Desc#9629,Mocodes#9630,Vict Age#9631,Vict Sex#9632,Vict Descent#9633,Premis Cd#9634,Premis Desc#9635,Weapon Used Cd#9636,Weapon Desc#9637,Status#9638,Status Desc#9639,Crm Cd 1#9640,Crm Cd 2#9641,Crm Cd 3#9642,Crm Cd 4#9643,... 4 more fields] Batched: false, DataFilters: [isnotnull(Vict Descent#9633)], Format: CSV, Location: InMemoryFileIndex(1 paths)[hdfs://okeanos-master:54310/spark_project_datasets/basic_dataset_2010t..., PartitionFilters: [], PushedFilters: [IsNotNull(Vict Descent)], ReadSchema: struct<DR_NO:string,Date Rptd:string,DATE OCC:string,TIME OCC:string,AREA :string,AREA NAME:strin...
+   :        +- Project [DR_NO#9839, cast(gettimestamp(Date Rptd#9840, MM/dd/yyyy hh:mm:ss a, TimestampType, Some(Europe/Athens), false) as date) AS Date Rptd#9895, cast(gettimestamp(DATE OCC#9841, MM/dd/yyyy hh:mm:ss a, TimestampType, Some(Europe/Athens), false) as date) AS DATE OCC#9925, TIME OCC#9842, AREA#9843, AREA NAME#9844, Rpt Dist No#9845, Part 1-2#9846, Crm Cd#9847, Crm Cd Desc#9848, Mocodes#9849, cast(Vict Age#9850 as int) AS Vict Age#9954, Vict Sex#9851, Vict Descent#9852, Premis Cd#9853, Premis Desc#9854, Weapon Used Cd#9855, Weapon Desc#9856, Status#9857, Status Desc#9858, Crm Cd 1#9859, Crm Cd 2#9860, Crm Cd 3#9861, Crm Cd 4#9862, ... 4 more fields]
+   :           +- Filter isnotnull(Vict Descent#9852)
+   :              +- FileScan csv [DR_NO#9839,Date Rptd#9840,DATE OCC#9841,TIME OCC#9842,AREA#9843,AREA NAME#9844,Rpt Dist No#9845,Part 1-2#9846,Crm Cd#9847,Crm Cd Desc#9848,Mocodes#9849,Vict Age#9850,Vict Sex#9851,Vict Descent#9852,Premis Cd#9853,Premis Desc#9854,Weapon Used Cd#9855,Weapon Desc#9856,Status#9857,Status Desc#9858,Crm Cd 1#9859,Crm Cd 2#9860,Crm Cd 3#9861,Crm Cd 4#9862,... 4 more fields] Batched: false, DataFilters: [isnotnull(Vict Descent#9852)], Format: CSV, Location: InMemoryFileIndex(1 paths)[hdfs://okeanos-master:54310/spark_project_datasets/basic_dataset_2020t..., PartitionFilters: [], PushedFilters: [IsNotNull(Vict Descent)], ReadSchema: struct<DR_NO:string,Date Rptd:string,DATE OCC:string,TIME OCC:string,AREA:string,AREA NAME:string...
+   +- Sort [knownfloatingpointnormalized(normalizenanandzero(cast(LAT#10114 as double))) ASC NULLS FIRST, knownfloatingpointnormalized(normalizenanandzero(cast(LON#10115 as double))) ASC NULLS FIRST], false, 0
+      +- Exchange hashpartitioning(knownfloatingpointnormalized(normalizenanandzero(cast(LAT#10114 as double))), knownfloatingpointnormalized(normalizenanandzero(cast(LON#10115 as double))), 200), ENSURE_REQUIREMENTS, [plan_id=11562]
+         +- Project [LAT#10114, LON#10115, ZIPcode#10116, split(ZIPcode#10116, -, -1)[0] AS ZIP_code#10120]
+            +- Filter (((isnotnull(ZIPcode#10116) AND isnotnull(split(ZIPcode#10116, -, -1)[0])) AND isnotnull(LAT#10114)) AND isnotnull(LON#10115))
+               +- FileScan csv [LAT#10114,LON#10115,ZIPcode#10116] Batched: false, DataFilters: [isnotnull(ZIPcode#10116), isnotnull(split(ZIPcode#10116, -, -1)[0]), isnotnull(LAT#10114), isnot..., Format: CSV, Location: InMemoryFileIndex(1 paths)[hdfs://okeanos-master:54310/spark_project_datasets/revgecoding_b.csv], PartitionFilters: [], PushedFilters: [IsNotNull(ZIPcode), IsNotNull(LAT), IsNotNull(LON)], ReadSchema: struct<LAT:string,LON:string,ZIPcode:string>
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+PLAN FOR 1st JOIN QUERY 3 SHUFFLE HASH
+
+== Physical Plan ==
+AdaptiveSparkPlan isFinalPlan=false
++- ShuffledHashJoin [ZIPcode#16223], [Zip Code#16193], Inner, BuildRight
+   :- Exchange hashpartitioning(ZIPcode#16223, 200), ENSURE_REQUIREMENTS, [plan_id=20450]
+   :  +- Filter isnotnull(ZIPcode#16223)
+   :     +- InMemoryTableScan [Vict Descent#15740, ZIPcode#16223], [isnotnull(ZIPcode#16223)]
+   :           +- InMemoryRelation [Vict Descent#15740, ZIPcode#16223], StorageLevel(disk, memory, deserialized, 1 replicas)
+   :                 +- AdaptiveSparkPlan isFinalPlan=false
+   :                    +- Project [Vict Descent#15740, ZIPcode#16223]
+   :                       +- ShuffledHashJoin [knownfloatingpointnormalized(normalizenanandzero(LAT#15871)), knownfloatingpointnormalized(normalizenanandzero(LON#15900))], [knownfloatingpointnormalized(normalizenanandzero(cast(LAT#16221 as double))), knownfloatingpointnormalized(normalizenanandzero(cast(LON#16222 as double)))], LeftOuter, BuildRight
+   :                          :- Exchange hashpartitioning(knownfloatingpointnormalized(normalizenanandzero(LAT#15871)), knownfloatingpointnormalized(normalizenanandzero(LON#15900)), 200), ENSURE_REQUIREMENTS, [plan_id=20457]
+   :                          :  +- Union
+   :                          :     :- Project [Vict Descent#15740, cast(LAT#15753 as double) AS LAT#15871, cast(LON#15754 as double) AS LON#15900]
+   :                          :     :  +- Filter isnotnull(Vict Descent#15740)
+   :                          :     :     +- FileScan csv [Vict Descent#15740,LAT#15753,LON#15754] Batched: false, DataFilters: [isnotnull(Vict Descent#15740)], Format: CSV, Location: InMemoryFileIndex(1 paths)[hdfs://okeanos-master:54310/spark_project_datasets/basic_dataset_2010t..., PartitionFilters: [], PushedFilters: [IsNotNull(Vict Descent)], ReadSchema: struct<Vict Descent:string,LAT:string,LON:string>
+   :                          :     +- Project [Vict Descent#15959, cast(LAT#15972 as double) AS LAT#16090, cast(LON#15973 as double) AS LON#16119]
+   :                          :        +- Filter isnotnull(Vict Descent#15959)
+   :                          :           +- FileScan csv [Vict Descent#15959,LAT#15972,LON#15973] Batched: false, DataFilters: [isnotnull(Vict Descent#15959)], Format: CSV, Location: InMemoryFileIndex(1 paths)[hdfs://okeanos-master:54310/spark_project_datasets/basic_dataset_2020t..., PartitionFilters: [], PushedFilters: [IsNotNull(Vict Descent)], ReadSchema: struct<Vict Descent:string,LAT:string,LON:string>
+   :                          +- Exchange hashpartitioning(knownfloatingpointnormalized(normalizenanandzero(cast(LAT#16221 as double))), knownfloatingpointnormalized(normalizenanandzero(cast(LON#16222 as double))), 200), ENSURE_REQUIREMENTS, [plan_id=20458]
+   :                             +- Filter (((isnotnull(ZIPcode#16223) AND isnotnull(split(ZIPcode#16223, -, -1)[0])) AND isnotnull(LAT#16221)) AND isnotnull(LON#16222))
+   :                                +- FileScan csv [LAT#16221,LON#16222,ZIPcode#16223] Batched: false, DataFilters: [isnotnull(ZIPcode#16223), isnotnull(split(ZIPcode#16223, -, -1)[0]), isnotnull(LAT#16221), isnot..., Format: CSV, Location: InMemoryFileIndex(1 paths)[hdfs://okeanos-master:54310/spark_project_datasets/revgecoding_b.csv], PartitionFilters: [], PushedFilters: [IsNotNull(ZIPcode), IsNotNull(LAT), IsNotNull(LON)], ReadSchema: struct<LAT:string,LON:string,ZIPcode:string>
+   +- Exchange hashpartitioning(Zip Code#16193, 200), ENSURE_REQUIREMENTS, [plan_id=20451]
+      +- Project [Zip Code#16193, Community#16194, cast(regexp_replace(Estimated Median Income#16195, [^\d], , 1) as int) AS Estimated median income#16199]
+         +- Filter isnotnull(Zip Code#16193)
+            +- FileScan csv [Zip Code#16193,Community#16194,Estimated Median Income#16195] Batched: false, DataFilters: [isnotnull(Zip Code#16193)], Format: CSV, Location: InMemoryFileIndex(1 paths)[hdfs://okeanos-master:54310/spark_project_datasets/LA_income_2015.csv], PartitionFilters: [], PushedFilters: [IsNotNull(Zip Code)], ReadSchema: struct<Zip Code:string,Community:string,Estimated Median Income:string>
+
+
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+PLAN FOR 1st JOIN QUERY 3 SHUFFLE_REPLICATE_NL
+
+
+== Physical Plan ==
+AdaptiveSparkPlan isFinalPlan=false
++- CartesianProduct (ZIPcode#19143 = Zip Code#19113)
+   :- Filter isnotnull(ZIPcode#19143)
+   :  +- InMemoryTableScan [Vict Descent#18660, ZIPcode#19143], [isnotnull(ZIPcode#19143)]
+   :        +- InMemoryRelation [Vict Descent#18660, ZIPcode#19143], StorageLevel(disk, memory, deserialized, 1 replicas)
+   :              +- AdaptiveSparkPlan isFinalPlan=false
+   :                 +- Project [Vict Descent#18660, ZIPcode#19143]
+   :                    +- BroadcastHashJoin [knownfloatingpointnormalized(normalizenanandzero(LAT#18791)), knownfloatingpointnormalized(normalizenanandzero(LON#18820))], [knownfloatingpointnormalized(normalizenanandzero(cast(LAT#19141 as double))), knownfloatingpointnormalized(normalizenanandzero(cast(LON#19142 as double)))], LeftOuter, BuildRight, false
+   :                       :- Union
+   :                       :  :- Project [Vict Descent#18660, cast(LAT#18673 as double) AS LAT#18791, cast(LON#18674 as double) AS LON#18820]
+   :                       :  :  +- Filter isnotnull(Vict Descent#18660)
+   :                       :  :     +- FileScan csv [Vict Descent#18660,LAT#18673,LON#18674] Batched: false, DataFilters: [isnotnull(Vict Descent#18660)], Format: CSV, Location: InMemoryFileIndex(1 paths)[hdfs://okeanos-master:54310/spark_project_datasets/basic_dataset_2010t..., PartitionFilters: [], PushedFilters: [IsNotNull(Vict Descent)], ReadSchema: struct<Vict Descent:string,LAT:string,LON:string>
+   :                       :  +- Project [Vict Descent#18879, cast(LAT#18892 as double) AS LAT#19010, cast(LON#18893 as double) AS LON#19039]
+   :                       :     +- Filter isnotnull(Vict Descent#18879)
+   :                       :        +- FileScan csv [Vict Descent#18879,LAT#18892,LON#18893] Batched: false, DataFilters: [isnotnull(Vict Descent#18879)], Format: CSV, Location: InMemoryFileIndex(1 paths)[hdfs://okeanos-master:54310/spark_project_datasets/basic_dataset_2020t..., PartitionFilters: [], PushedFilters: [IsNotNull(Vict Descent)], ReadSchema: struct<Vict Descent:string,LAT:string,LON:string>
+   :                       +- BroadcastExchange HashedRelationBroadcastMode(List(knownfloatingpointnormalized(normalizenanandzero(cast(input[0, string, false] as double))), knownfloatingpointnormalized(normalizenanandzero(cast(input[1, string, false] as double)))),false), [plan_id=26091]
+   :                          +- Filter (((isnotnull(ZIPcode#19143) AND isnotnull(split(ZIPcode#19143, -, -1)[0])) AND isnotnull(LAT#19141)) AND isnotnull(LON#19142))
+   :                             +- FileScan csv [LAT#19141,LON#19142,ZIPcode#19143] Batched: false, DataFilters: [isnotnull(ZIPcode#19143), isnotnull(split(ZIPcode#19143, -, -1)[0]), isnotnull(LAT#19141), isnot..., Format: CSV, Location: InMemoryFileIndex(1 paths)[hdfs://okeanos-master:54310/spark_project_datasets/revgecoding_b.csv], PartitionFilters: [], PushedFilters: [IsNotNull(ZIPcode), IsNotNull(LAT), IsNotNull(LON)], ReadSchema: struct<LAT:string,LON:string,ZIPcode:string>
+   +- Project [Zip Code#19113, Community#19114, cast(regexp_replace(Estimated Median Income#19115, [^\d], , 1) as int) AS Estimated median income#19119]
+      +- Filter isnotnull(Zip Code#19113)
+         +- FileScan csv [Zip Code#19113,Community#19114,Estimated Median Income#19115] Batched: false, DataFilters: [isnotnull(Zip Code#19113)], Format: CSV, Location: InMemoryFileIndex(1 paths)[hdfs://okeanos-master:54310/spark_project_datasets/LA_income_2015.csv], PartitionFilters: [], PushedFilters: [IsNotNull(Zip Code)], ReadSchema: struct<Zip Code:string,Community:string,Estimated Median Income:string>
