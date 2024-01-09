@@ -36,7 +36,8 @@ for some rows and printing of the schema and total number of rows.
 hint&explain methods.
 - `report.pdf` : Contains our report in pdf format with our analysis of the results, performances and
 explanations of our codes.
-- `Latex Project` : Contains a .zip file of our Latex Project (Latex code and images used).   
+- `Latex Project` : Contains a .zip file of our Latex Project (Latex code and images used).
+- `advanced_db_project_en.pdf` : Contains the description of the project (e.g. description of the queries that we implemented).    
 
 ## Cluster Description
 As mentioned before, we used a two-node cluster, consisting of two virtual machines, running Ubuntu 22.04 and    
