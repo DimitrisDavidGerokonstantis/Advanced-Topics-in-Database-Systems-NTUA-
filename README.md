@@ -1,4 +1,4 @@
-# AdvancedDatabasesTopics2023-2024  
+# AdvancedDatabases2023-2024 Semester Project  
 
 ## Description
 In this project, we implemented some queries on the Los Angeles Crime Data 2010-2023 datasets. We made use of  
